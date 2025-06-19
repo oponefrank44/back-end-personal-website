@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
 import "dotenv/config";
 
 import {
@@ -34,17 +34,17 @@ function Authorizationrequest(
   }
 }
 
-const transporter = nodemailer.createTransport({
-  service: process.env.MAIL_SERVICE,
-  host: process.env.HOST,
-  port: 465,
-  secure: false,
+// const transporter = nodemailer.createTransport({
+//   service: process.env.MAIL_SERVICE,
+//   host: process.env.HOST,
+//   port: 465,
+//   secure: false,
 
-  auth: {
-    user: process.env.MAIL_USER,
-    pass:process.env.GMAIL_PASSWORD, // the app password Not your gmail password
-  },
-});
+//   auth: {
+//     user: process.env.MAIL_USER,
+//     pass:process.env.GMAIL_PASSWORD, // the app password Not your gmail password
+//   },
+// });
 
 @Controller("")
 class RouteController {
@@ -395,33 +395,26 @@ class RouteController {
       names: `${fname} ${lname}`,
       message: message,
     });
-    console.log(contact);
-    res.status(201).json({
-          message: `Contact information received ${fname} we will get back to you`,
-          Contact: contact,
-        });
-    
+   
     contact
       .save()
       .then((result) => {
-        const info = transporter.sendMail({
-          from: email, // sender address
-          to: process.env.MAIL_USER,
-          subject: subject, // Subject line
-          text: message, // plain text body
-          html: `<b>Dear frank is  ${fname} </b><br><p>${message}</p>`, // html body
-        });
-        const respondence = transporter.sendMail({
-          from: process.env.MAIL_USER, // sender address
-          to: email,
-          subject: subject, // Subject line
-          text: message, // plain text body
-          html: `<b>Dear ${fname} </b><br><p>${process.env.RESPONSE_MESSAGE}</p><br><p> Thank you Frank</p>`, // html body
-        });
-        return info;
-      })
-      .then((info) => {
-        console.log("Email sent:", info.response);
+        // const info = transporter.sendMail({
+        //   from: email, // sender address
+        //   to: process.env.MAIL_USER,
+        //   subject: subject, // Subject line
+        //   text: message, // plain text body
+        //   html: `<b>Dear frank is  ${fname} </b><br><p>${message}</p>`, // html body
+        // });
+        // const respondence = transporter.sendMail({
+        //   from: process.env.MAIL_USER, // sender address
+        //   to: email,
+        //   subject: subject, // Subject line
+        //   text: message, // plain text body
+        //   html: `<b>Dear ${fname} </b><br><p>${process.env.RESPONSE_MESSAGE}</p><br><p> Thank you Frank</p>`, // html body
+        // });
+      
+      
         res.status(201).json({
           message: `Contact information received ${fname} we will get back to you`,
           Contact: contact,

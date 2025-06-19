@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-
-     
-
-     "build": "tsc",
-  "start": "node build/index.js",
-  "dev": "ts-node src/index.ts"
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +20,7 @@
     "express": "^5.1.0",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.3",
-    "nodemailer": "^7.0.3",
+    "nodemailer": "^6.9.8",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
