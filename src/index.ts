@@ -34,7 +34,7 @@ mongoose
   .connect(mongoUri)
   .then((result) => {
     app.listen(PORT, () => {
-      console.log(`love is running on http://localhost:${PORT}`);
+      console.log(`server is running on http://localhost:${PORT}`);
     });
   })
   .catch((error) => {

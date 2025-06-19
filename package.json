@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:build": "tsc -w",
-    "start:server": "nodemon  build/index.js",
-    "start": "concurrently npm:start:*"
+
+     
+
+     "build": "tsc",
+  "start": "node build/index.js",
+  "dev": "ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
