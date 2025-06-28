@@ -1,4 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+<<<<<<< HEAD
+=======
+import { sendGridService } from "./mailer";
+>>>>>>> 57ab60fcd92141a1c8a9e35ae2db3d26321d0db1
 import "dotenv/config";
 
 import {
@@ -369,6 +373,30 @@ class RouteController {
   
        
       .then((result) => {
+<<<<<<< HEAD
+=======
+        sendGridService
+          .sendEmail({
+            to: "recipient@example.com",
+            subject: "Welcome to Our Service",
+            text: "Thank you for joining our service!",
+            html: "<strong>Thank you</strong> for joining our service!",
+          })
+          .then((success) => {
+            if (success) {
+              console.log("Email was sent successfully");
+            } else {
+              console.error("Failed to send email");
+            }
+          })
+          .catch((err) => {
+            console.error("Error sending email:", err);
+          });
+
+        return result;
+      })
+      .then((result) => {
+>>>>>>> 57ab60fcd92141a1c8a9e35ae2db3d26321d0db1
         res.status(201).json({
           message: `Contact information received ${fname} we will get back to you`,
           Contact: contact,
