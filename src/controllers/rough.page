@@ -1,0 +1,14 @@
+     // const info = transporter.sendMail({
+        //   from: email, // sender address
+        //   to: process.env.MAIL_USER,
+        //   subject: subject, // Subject line
+        //   text: message, // plain text body
+        //   html: `<b>Dear frank is  ${fname} </b><br><p>${message}</p>`, // html body
+        // });
+        // const respondence = transporter.sendMail({
+        //   from: process.env.MAIL_USER, // sender address
+        //   to: email,
+        //   subject: subject, // Subject line
+        //   text: message, // plain text body
+        //   html: `<b>Dear ${fname} </b><br><p>${process.env.RESPONSE_MESSAGE}</p><br><p> Thank you Frank</p>`, // html body
+        // });

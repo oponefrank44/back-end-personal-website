@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import nodemailer from "nodemailer";
 import "dotenv/config";
 
 import {
@@ -29,36 +28,19 @@ function Authorizationrequest(
   } else {
     res.status(401).json({
       message: "Unauthorized",
-
     });
   }
 }
-
-const transporter = nodemailer.createTransport({
-  service: process.env.MAIL_SERVICE,
-  host: process.env.HOST,
-  port: 465,
-  secure: false,
-
-  auth: {
-    user: process.env.MAIL_USER,
-    pass:process.env.GMAIL_PASSWORD, // the app password Not your gmail password
-  },
-});
 
 @Controller("")
 class RouteController {
   // Project route for GET and POST
   @get("/")
-  
   Home(req: Request, res: Response): void {
-    
-        res.status(201).json({
-          message: "projects fetched successfully",
-          projects: "welcome to the page",
-        });
-     
-     
+    res.status(201).json({
+      message: "projects fetched successfully",
+      projects: "welcome to the page",
+    });
   }
   // get projects
   @get("/projects")
@@ -219,10 +201,10 @@ class RouteController {
         });
       });
   }
-// Post
+  // Post
   // contact route for GET and POST
 
- @get("/posts")
+  @get("/posts")
   Post(req: Request, res: Response): void {
     PostModel.find()
       .then((projects) => {
@@ -245,25 +227,17 @@ class RouteController {
   }
   // post project
   @post("/post")
-  @BodyValidator(
-    "title",
-    "content",
-    
-  )
+  @BodyValidator("title", "content")
   CreatePost(req: Request, res: Response): void {
-    const {
-      title,
-     content,
-     
-    } = req.body;
+    const { title, content } = req.body;
     console.log("Received post data:", req.body);
 
     const post = new PostModel({
       title: title,
-      content: content
-      
+      content: content,
     });
-    post.save()
+    post
+      .save()
       .then((result) => {
         console.log("Post saved:", result);
 
@@ -306,16 +280,11 @@ class RouteController {
   @patch("/posts/:id")
   UpdatePost(req: Request, res: Response): void {
     const { id } = req.params;
-    const {
-      title,
-      content
-     
-    } = req.body;
+    const { title, content } = req.body;
 
     PostModel.findByIdAndUpdate(id, {
       title: title,
-     content: content,
-     
+      content: content,
     })
       .then((post) => {
         if (!post) {
@@ -359,7 +328,6 @@ class RouteController {
       });
   }
 
-
   // get all a contact
   @get("/contact")
   ContactGet(req: Request, res: Response): void {
@@ -370,7 +338,7 @@ class RouteController {
           return res.status(404).json({
             message: "No contacts found",
           });
-        } 
+        }
 
         res.status(201).json({
           message: "contacts fetched successfully",
@@ -395,33 +363,12 @@ class RouteController {
       names: `${fname} ${lname}`,
       message: message,
     });
-    console.log(contact);
-    res.status(201).json({
-          message: `Contact information received ${fname} we will get back to you`,
-          Contact: contact,
-        });
-    
+
     contact
       .save()
+  
+       
       .then((result) => {
-        const info = transporter.sendMail({
-          from: email, // sender address
-          to: process.env.MAIL_USER,
-          subject: subject, // Subject line
-          text: message, // plain text body
-          html: `<b>Dear frank is  ${fname} </b><br><p>${message}</p>`, // html body
-        });
-        const respondence = transporter.sendMail({
-          from: process.env.MAIL_USER, // sender address
-          to: email,
-          subject: subject, // Subject line
-          text: message, // plain text body
-          html: `<b>Dear ${fname} </b><br><p>${process.env.RESPONSE_MESSAGE}</p><br><p> Thank you Frank</p>`, // html body
-        });
-        return info;
-      })
-      .then((info) => {
-        console.log("Email sent:", info.response);
         res.status(201).json({
           message: `Contact information received ${fname} we will get back to you`,
           Contact: contact,
