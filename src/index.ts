@@ -1,29 +1,22 @@
-
-
-import express, { Request, Response, NextFunction,Errback,ErrorRequestHandler } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import cors from "cors"
+import cors from "cors";
 import { AppRouter } from "./AppRouter";
 import "./controllers/routeController";
 import "dotenv/config";
 import errorHandler from "./controllers/decorators/errorHandler";
 
-
 const app = express();
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 const PORT = 3000;
-app.use(cors())
+app.use(cors());
 
 // Middleware to handle CORS errors
 
-
-
 app.use(AppRouter.getInstance());
 app.use(errorHandler);
-
-
 
 const mongoUri = process.env.MONGOBD_URI;
 if (!mongoUri) {
@@ -31,7 +24,10 @@ if (!mongoUri) {
 }
 // Log the MongoDB URI
 mongoose
-  .connect(mongoUri)
+  .connect(mongoUri, {
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+  })
   .then((result) => {
     app.listen(PORT, () => {
       console.log(`server is running on http://localhost:${PORT}`);
