@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-// import nodemailer from "nodemailer";
+import { sendGridService } from "./mailer";
 import "dotenv/config";
-
 
 import {
   get,
@@ -369,10 +368,23 @@ class RouteController {
     contact
       .save()
       .then((result) => {
-        //
-.l
-        // comeback
-        
+        sendGridService
+          .sendEmail({
+            to: "recipient@example.com",
+            subject: "Welcome to Our Service",
+            text: "Thank you for joining our service!",
+            html: "<strong>Thank you</strong> for joining our service!",
+          })
+          .then((success) => {
+            if (success) {
+              console.log("Email was sent successfully");
+            } else {
+              console.error("Failed to send email");
+            }
+          })
+          .catch((err) => {
+            console.error("Error sending email:", err);
+          });
 
         return result;
       })
